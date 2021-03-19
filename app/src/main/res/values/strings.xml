@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HomeCreditExam</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Forecast Fragment</string>
+    <string name="second_fragment_label">Forecast Detail Fragment</string>
+
+    <string name="unit_celsius">%1$s &#176;C</string>
+    <string name="detail_hi_low_temp">High %1$s &#176;C / Low %2$s &#176;C</string>
+    <string name="error_no_internet">No internet connection</string>
+
+</resources>
