@@ -33,7 +33,6 @@ class ForecastFragment : BaseFragment(R.layout.fragment_forecast), MainAdapter.O
     ): View {
         viewBinding = FragmentForecastBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModel.refreshData()
         setupUi()
         setupObservers()
         return view
@@ -58,6 +57,10 @@ class ForecastFragment : BaseFragment(R.layout.fragment_forecast), MainAdapter.O
     }
 
     override fun setupObservers() {
+        viewModel.getLiveLocalForecasts().observe(requireActivity(), {
+            retrieveList(it)
+        })
+
         viewModel.forecasts.observe(requireActivity(), {
             it?.let { result ->
 

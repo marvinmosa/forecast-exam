@@ -65,7 +65,7 @@ class ForecastViewModelTest {
 
             forecastViewModel.forecasts.observeForever(apiForecastObserver)
             verify(mainRepository).getForecasts("1701668,1835848,3067696", "metric", "8beca4dc58974504cca73181ee8ca127")
-
+            verify(apiForecastObserver).onChanged(Result.loading(null))
             verify(apiForecastObserver).onChanged(Result.success(emptyList()))
             forecastViewModel.forecasts.removeObserver(apiForecastObserver)
         }
@@ -80,6 +80,7 @@ class ForecastViewModelTest {
 
             val forecastViewModel = ForecastViewModel(mainRepository, networkHelper)
             forecastViewModel.forecasts.observeForever(apiForecastObserver)
+            verify(apiForecastObserver).onChanged(Result.loading(null))
             verify(apiForecastObserver).onChanged(Result.error(null, "No internet connection"))
             forecastViewModel.forecasts.removeObserver(apiForecastObserver)
         }

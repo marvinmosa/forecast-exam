@@ -28,11 +28,8 @@ class ForecastViewModel(
         fetchForecasts()
     }
 
-    fun refreshData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val localForecasts = mainRepository.getLocalForecasts()
-            forecast.postValue(Result.success(localForecasts))
-        }
+    fun getLiveLocalForecasts() : LiveData<List<ForecastItem>> {
+        return mainRepository.getLiveLocalForecasts()
     }
 
     fun fetchForecasts() {
@@ -47,16 +44,13 @@ class ForecastViewModel(
                             response.body()?.let { remoteResponse ->
                                 val localForecasts = mainRepository.getLocalForecasts()
                                 val remoteForecasts = remoteResponse.forecastList
-                                remoteForecasts.forEach { remoteForecastItem ->
-                                    localForecasts.forEach { localForecastItem ->
-                                        if (remoteForecastItem.id == localForecastItem.id) {
-                                            remoteForecastItem.favorite = localForecastItem.favorite
-                                        }
-                                    }
+
+                                localForecasts.map { localForecastItem ->
+                                    remoteForecasts.firstOrNull {
+                                        localForecastItem.id.equals(it.id, ignoreCase = true)
+                                    }?.let { it.favorite = localForecastItem.favorite }
                                 }
                                 mainRepository.addForecasts(remoteForecasts)
-
-                                //get Local
                                 forecast.postValue(Result.success(remoteForecasts))
                             }
                         } else forecast.postValue(Result.error(null, response.message().toString()))

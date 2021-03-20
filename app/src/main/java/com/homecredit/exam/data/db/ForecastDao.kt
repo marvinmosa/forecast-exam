@@ -1,5 +1,6 @@
 package com.homecredit.exam.data.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -8,6 +9,9 @@ import com.homecredit.exam.data.model.ForecastItem
 
 @Dao
 interface ForecastDao {
+    @Query("SELECT * FROM forecast ORDER BY id")
+    fun getAllLiveForecasts(): LiveData<List<ForecastItem>>
+
     @Query("SELECT * FROM forecast ORDER BY id")
     fun getAllForecasts(): List<ForecastItem>
 

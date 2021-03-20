@@ -32,6 +32,8 @@ class ForecastDetailFragment : BaseFragment(R.layout.fragment_forecast_detail) {
     ): View {
         viewBinding = FragmentForecastDetailBinding.inflate(inflater, container, false)
         val view = binding.root
+        locationId = arguments?.getString(BUNDLE_LOCATION_ID)
+        viewModel.fetchForecast(locationId)
         setupUi()
         setupObservers()
         return view
@@ -40,8 +42,6 @@ class ForecastDetailFragment : BaseFragment(R.layout.fragment_forecast_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).onShowBackButton(true)
-        locationId = arguments?.getString(BUNDLE_LOCATION_ID)
-        viewModel.fetchForecast(locationId)
     }
 
     override fun setupUi() {

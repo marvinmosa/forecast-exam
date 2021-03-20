@@ -11,13 +11,15 @@ class MainRepository(private val apiHelper: ApiHelper, private val dao: Forecast
 
     suspend fun getForecast(id: String, unit: String = API_UNIT, appId: String = API_APP_ID) = apiHelper.getForecast(id, unit, appId)
 
-    suspend fun getLocalForecasts() = dao.getAllForecasts()
+    fun getLiveLocalForecasts() = dao.getAllLiveForecasts()
 
-    suspend fun getLocalForecast(id: Int) = dao.getForecast(id)
+    fun getLocalForecasts() = dao.getAllForecasts()
 
-    suspend fun addForecasts(list: List<ForecastItem>) = dao.addForecastList(list)
+    fun getLocalForecast(id: Int) = dao.getForecast(id)
 
-    suspend fun addForecast(item: ForecastItem) = dao.addForecast(item)
+    fun addForecasts(list: List<ForecastItem>) = dao.addForecastList(list)
+
+    fun addForecast(item: ForecastItem) = dao.addForecast(item)
 
     fun updateForecastFavorite(id: String, isToggled: Boolean) = dao.updateForecastFavorite(id, isToggled)
 
